@@ -3,7 +3,8 @@ var gulp = require('gulp'),
 	path = require('path'),
 	browserSync = require('browser-sync'),
 	browserify = require('gulp-browserify'),
-    notify = require("gulp-notify");
+    notify = require("gulp-notify"),
+    jasmine = require('gulp-jasmine');
 
 var paths = {
     less: 'src/less/**/*.less',
@@ -36,6 +37,11 @@ gulp.task('scripts', function() {
         }))
         .on("error", notify.onError('<%= error.message %>'))
         .pipe(gulp.dest('src/build/app'))
+});
+
+gulp.task('test', function () {
+    gulp.src('test/**/*.js')
+        .pipe(jasmine());
 });
 
 gulp.task('default', ['less', 'scripts', 'browser-sync'], function () {
