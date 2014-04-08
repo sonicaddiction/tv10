@@ -1,4 +1,8 @@
 <div>
 	<h1>{{ header }}</h1>
-	<p>{{ content }}</p>
+	<ul>
+		{{#each cats}}
+		<li>{{this.name}}</li>
+		{{/each}}
+	</ul>
 </div>
