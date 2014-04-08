@@ -8,13 +8,11 @@ var gulp = require('gulp'),
 
 var paths = {
     less: 'src/less/**/*.less',
-    appScript: 'src/app/app.js',
-    allScripts: 'src/app/**/*.js',
     html: 'src/**/*.html'
 };
 
 gulp.task('browser-sync', function() {
-    browserSync.init([paths.less, paths.html, paths.allScripts], {
+    browserSync.init([paths.less, paths.html, 'src/build/app/app.js'], {
         server: {
             baseDir: './src'
         }
@@ -33,10 +31,11 @@ gulp.task('less', function () {
 gulp.task('scripts', function() {
     gulp.src('src/app/app.js')
         .pipe(browserify({
-            insertGlobals : true
+            insertGlobals : true,
+            transform: ['hbsfy']
         }))
         .on("error", notify.onError('<%= error.message %>'))
-        .pipe(gulp.dest('src/build/app'))
+        .pipe(gulp.dest('src/build/app'));
 });
 
 gulp.task('test', function () {
